@@ -2,6 +2,9 @@
   "name": "node-scrapy",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
   "repository": "git@github.com:sumyfly/node-scrapy.git",
   "author": "shenglong.qian <shenglong.qian@gotogameday.com>",
   "license": "MIT"
