@@ -8,7 +8,15 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}/src/index.js"
+      // if run tscw, don't need preLaunchTask
+      // "preLaunchTask": "tsc",
+      "cwd": "${workspaceFolder}",
+      "program": "${workspaceFolder}/tsrc/index.ts",
+      "outFiles": [
+        // need * because src is a directory
+        "${workspaceRoot}/src/*"
+      ],
+      "sourceMaps": true
     }
   ]
 }
