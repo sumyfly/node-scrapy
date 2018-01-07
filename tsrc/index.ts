@@ -4,7 +4,7 @@ import * as path from 'path'
 
 import { fsUtils } from './utils/fsUtils'
 
-function requestForHttpContent(url, dirName) {
+function requestForHttpContent(url, fileDirName) {
   const fileName = path.basename(url)
 
   const callback = res => {
@@ -16,7 +16,7 @@ function requestForHttpContent(url, dirName) {
       fileBuff.push(buffer)
     })
 
-    res.on('end', () => {
+    res.on('end', async () => {
       if (isNaN(contentLength)) {
         console.warn(url + 'contentLenght error')
         return
@@ -26,8 +26,10 @@ function requestForHttpContent(url, dirName) {
       if (totalBuff.length < contentLength) {
         console.warn('error contentLength ')
       }
-      console.warn('isExists', fsUtils.isExits(dirName))
-      fs.appendFile(dirName + '/' + fileName, totalBuff, { flag: 'a' }, err => console.warn(err + ':' + fileName))
+      if (!(await fsUtils.isExits(fileDirName))) {
+        await fsUtils.makeDir(fileDirName)
+      }
+      fs.appendFile(fileDirName + '/' + fileName, totalBuff, { flag: 'a' }, err => console.warn(err + ':' + fileName))
     })
 
   }
@@ -43,4 +45,4 @@ function startScrapyTask(url, dirName) {
   req.end()
 }
 //main
-startScrapyTask('http://content.battlenet.com.cn/wow/media/wallpapers/patch/fall-of-the-lich-king/fall-of-the-lich-king-1920x1080.jpg', path.resolve('output').toString())
+startScrapyTask('http://content.battlenet.com.cn/wow/media/wallpapers/patch/fall-of-the-lich-king/fall-of-the-lich-king-1920x1080.jpg', path.resolve('output/img').toString())

@@ -1,25 +1,54 @@
 import * as fs from 'fs'
+import * as pathFun from 'path'
 
 export const fsUtils = {
   isExits(path) {
-    console.warn('path', path)
-    fs.stat(path, (err, stat) => {
-      console.warn('xxx', err, stat)
-      if (err == null) {
-        if (stat.isDirectory()) {
-          //directory
-          return true
-        } else if (stat.isFile()) {
-          //file
-          return true
+    return new Promise((resolve, reject) => {
+
+      fs.stat(path, (err, stat) => {
+        if (err == null) {
+          if (stat.isDirectory()) {
+            resolve(true)
+          } else if (stat.isFile()) {
+            resolve(true)
+          } else {
+            resolve(false)
+          }
         } else {
-          return false
+          console.log('fsUtils.isExists err: ' + err)
+          resolve(false)
         }
-      } else {
-        console.log('isExists err:' + err)
-        return false
-      }
+      })
     })
+  },
+
+  // the result is a Promise
+  makeDir(pathName: string) {
+
+    const _makeDir = async (path, callback) => {
+      const _bIsExits = await fsUtils.isExits(path)
+
+      if (_bIsExits) {
+        // final return value, so it's a Promise come from callback
+        return callback()
+      } else {
+        return _makeDir(pathFun.dirname(path), () => {
+          return new Promise((resolve, reject) => {
+            fs.mkdir(path, async err => {
+              await callback() // need await to wait for the callback finished.
+              if (!err) {
+                resolve(true)
+              } else {
+                resolve(false)
+              }
+            })
+          })
+
+        })
+      }
+    }
+
+    return _makeDir(pathName, () => Promise.resolve(true))
   }
 
 

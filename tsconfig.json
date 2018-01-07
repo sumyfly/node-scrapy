@@ -3,7 +3,16 @@
         "module": "commonjs",
         "target": "es6",
         "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "checkJs": true,
+        "noEmit": false,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
         "outDir": "./src",
+        "preserveConstEnums": true,
+        "pretty": true,
+        "removeComments": true,
+        "rootDir": "./tsrc",
         "noImplicitAny": false,
         "sourceMap": true,
         "noImplicitReturns": true,
@@ -11,7 +20,7 @@
         "strictNullChecks": true
     },
     "include": [
-        "./tsrc/**/*"
+        "tsrc/**/*"
     ],
     "exclude": [
         "node_modules"
