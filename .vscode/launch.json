@@ -10,7 +10,7 @@
       "name": "Launch Program",
       // if run tscw, don't need preLaunchTask
       // "preLaunchTask": "tsc",
-      "cwd": "${workspaceFolder}",
+      "cwd": "${workspaceFolder}", // cwd can interactive run js
       "program": "${workspaceFolder}/tsrc/index.ts",
       "outFiles": [
         // need * because src is a directory
