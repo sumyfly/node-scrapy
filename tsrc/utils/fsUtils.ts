@@ -35,11 +35,12 @@ export const fsUtils = {
         return _makeDir(pathFun.dirname(path), () => {
           return new Promise((resolve, reject) => {
             fs.mkdir(path, async err => {
-              await callback() // need await to wait for the callback finished.
+              const r = await callback() // need await to wait for the callback finished.
               if (!err) {
-                resolve(true)
+                console.warn('fsUtils.makeDir err', err)
+                resolve(true && r)
               } else {
-                resolve(false)
+                resolve(false && r)
               }
             })
           })
