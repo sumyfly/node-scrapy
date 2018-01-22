@@ -2,6 +2,7 @@
 node_modules/
 src/
 output/
+dest/
 
 #node
 npm-debug.log
