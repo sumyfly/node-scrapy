@@ -15,15 +15,9 @@ gulp.task('svg', function () {
       return '</' + x[2].toUpperCase()
     }))
 
-    .pipe(replace('<stop', '</stop'))
-    .pipe(replace('</stop>', '</stop>'))
-
     .pipe(replace('stop-color', 'stopColor'))
     .pipe(replace('stroke-width', 'strokeWidth'))
     .pipe(replace('fill-rule', 'fillRule'))
-
-    .pipe(replace('<rect', '</Rect'))
-    .pipe(replace('</rect>', '</Rect>'))
 
     .pipe(gulp.dest('dest'));
 })
