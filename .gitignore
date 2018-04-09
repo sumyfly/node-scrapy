@@ -3,7 +3,7 @@ node_modules/
 src/
 output/
 dest/
-a.svg
+src.svg
 
 #node
 npm-debug.log

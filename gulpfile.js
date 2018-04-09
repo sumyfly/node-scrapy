@@ -2,7 +2,7 @@ var replace = require('gulp-replace')
 var gulp = require('gulp')
 
 gulp.task('svg', function () {
-  gulp.src(['./a.svg'])
+  gulp.src(['./src.svg'])
     .pipe(replace(/<\?xml.*\?>/g, ''))
     .pipe(replace(/<!--.*-->/g, ''))
     .pipe(replace('version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"', ''))
