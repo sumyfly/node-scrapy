@@ -47,10 +47,9 @@ function startScrapyTask(url, dirName) {
   })
   req.end()
 }
+
 //main
-const out = {}
 Object.keys(emojis).map(key => {
-  out[key] = []
   emojis[key].map(img => {
     const reg = /http:\/\/img.soogif.com\/(.*)/g
     // const fileName = reg.exec(img.image)[1]
