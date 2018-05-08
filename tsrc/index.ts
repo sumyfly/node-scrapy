@@ -1,8 +1,11 @@
 import * as http from 'http'
 import * as fs from 'fs'
 import * as path from 'path'
-
 import { fsUtils } from './utils/fsUtils'
+
+const emojis = require('./emojis.json')
+console.warn('emojis', emojis)
+
 
 function requestForHttpContent(url, fileDirName) {
   const fileName = path.basename(url)
@@ -45,4 +48,13 @@ function startScrapyTask(url, dirName) {
   req.end()
 }
 //main
-startScrapyTask('http://content.battlenet.com.cn/wow/media/wallpapers/patch/fall-of-the-lich-king/fall-of-the-lich-king-1920x1080.jpg', path.resolve('output/img').toString())
+const out = {}
+Object.keys(emojis).map(key => {
+  out[key] = []
+  emojis[key].map(img => {
+    const reg = /http:\/\/img.soogif.com\/(.*)/g
+    // const fileName = reg.exec(img.image)[1]
+    startScrapyTask(img.image, path.resolve(`output/img/${key}`).toString())
+  })
+})
+// startScrapyTask('http://content.battlenet.com.cn/wow/media/wallpapers/patch/fall-of-the-lich-king/fall-of-the-lich-king-1920x1080.jpg', path.resolve('output/img').toString())

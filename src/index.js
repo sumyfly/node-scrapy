@@ -12,6 +12,8 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const fsUtils_1 = require("./utils/fsUtils");
+const emojis = require('./emojis.json');
+console.warn('emojis', emojis);
 function requestForHttpContent(url, fileDirName) {
     const fileName = path.basename(url);
     const callback = res => {
@@ -45,5 +47,14 @@ function startScrapyTask(url, dirName) {
     });
     req.end();
 }
-startScrapyTask('http://content.battlenet.com.cn/wow/media/wallpapers/patch/fall-of-the-lich-king/fall-of-the-lich-king-1920x1080.jpg', path.resolve('output/img').toString());
+const out = {};
+Object.keys(emojis).map(key => {
+    out[key] = [];
+    emojis[key].map(img => {
+        const reg = /http:\/\/img.soogif.com\/(.*)/g;
+        const fileName = reg.exec(img.image)[1];
+        out[key].push({ image: `https://smileprod.blob.core.chinacloudapi.cn/emojis/${key}/` + fileName });
+    });
+});
+console.warn('out', JSON.stringify(out));
 //# sourceMappingURL=index.js.map
